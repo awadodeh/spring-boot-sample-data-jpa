@@ -18,6 +18,7 @@ package sample.data.jpa.service;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import sample.data.jpa.domain.City;
+import sample.data.jpa.repository.CityRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,14 +44,14 @@ public class CityRepositoryIntegrationTests {
 	@org.junit.Ignore
 	public void findsFirstPageOfCities() {
 
-		Page<City> cities = this.repository.findAll(new PageRequest(0, 10));
+		Page<City> cities = this.repository.findAll(PageRequest.of(0, 10));
 		assertThat(cities.getTotalElements()).isGreaterThan(20L);
 	}
 
 	@Test
 	public void findsFirstPageOfCities1() {
 
-		Page<City> cities = this.repository.findAll(new PageRequest(0, 10));
+		Page<City> cities = this.repository.findAll(PageRequest.of(0, 10));
 		assertThat(cities.getTotalElements()).isGreaterThan(0L);
 	}
 }

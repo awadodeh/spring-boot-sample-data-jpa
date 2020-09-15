@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package sample.data.jpa.service;
+package sample.data.jpa.repository;
+
+import sample.data.jpa.domain.Hotel;
+import sample.data.jpa.domain.Review;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.Repository;
 
-import sample.data.jpa.domain.City;
-import sample.data.jpa.domain.HotelSummary;
+public interface ReviewRepository extends Repository<Review, Long> {
 
-public interface CityService {
+	Page<Review> findByHotel(Hotel hotel, Pageable pageable);
 
-	Page<City> findCities(CitySearchCriteria criteria, Pageable pageable);
+	Review findByHotelAndIndex(Hotel hotel, int index);
 
-	City getCity(String name, String country);
+	Review save(Review review);
 
-	Page<HotelSummary> getHotels(City city, Pageable pageable);
-
-	Page<City> findAll();
 }

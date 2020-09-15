@@ -20,14 +20,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
 import sample.data.jpa.domain.City;
 import sample.data.jpa.domain.Hotel;
 import sample.data.jpa.domain.Rating;
 import sample.data.jpa.domain.RatingCount;
 import sample.data.jpa.domain.Review;
 import sample.data.jpa.domain.ReviewDetails;
+import sample.data.jpa.domain.projection.HotelProjection;
+import sample.data.jpa.repository.HotelRepository;
+import sample.data.jpa.repository.ReviewRepository;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,16 +40,22 @@ import org.springframework.util.Assert;
 
 @Component("hotelService")
 @Transactional
+@Slf4j
 class HotelServiceImpl implements HotelService {
 
 	private final HotelRepository hotelRepository;
 
 	private final ReviewRepository reviewRepository;
 
-	public HotelServiceImpl(HotelRepository hotelRepository,
-			ReviewRepository reviewRepository) {
+	public HotelServiceImpl(HotelRepository hotelRepository, ReviewRepository reviewRepository) {
 		this.hotelRepository = hotelRepository;
 		this.reviewRepository = reviewRepository;
+	}
+
+	@Override
+	public Page<HotelProjection> findAll() {
+//		return hotelRepository.findAllHotels(PageRequest.of(0, 1000));
+		return null;
 	}
 
 	@Override

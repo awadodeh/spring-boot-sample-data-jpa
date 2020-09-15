@@ -20,6 +20,7 @@ import sample.data.jpa.domain.City;
 import sample.data.jpa.domain.Hotel;
 import sample.data.jpa.domain.Review;
 import sample.data.jpa.domain.ReviewDetails;
+import sample.data.jpa.domain.projection.HotelProjection;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,4 +37,5 @@ public interface HotelService {
 
 	ReviewsSummary getReviewSummary(Hotel hotel);
 
+	Page<HotelProjection> findAll();
 }

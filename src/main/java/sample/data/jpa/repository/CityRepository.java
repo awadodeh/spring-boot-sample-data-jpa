@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package sample.data.jpa.service;
+package sample.data.jpa.repository;
+
+import sample.data.jpa.domain.City;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.Repository;
 
-import sample.data.jpa.domain.City;
-import sample.data.jpa.domain.HotelSummary;
+public interface CityRepository extends Repository<City, Long> {
 
-public interface CityService {
+	Page<City> findAll(Pageable pageable);
 
-	Page<City> findCities(CitySearchCriteria criteria, Pageable pageable);
+	Page<City> findByNameContainingAndCountryContainingAllIgnoringCase(String name,
+			String country, Pageable pageable);
 
-	City getCity(String name, String country);
+	City findByNameAndCountryAllIgnoringCase(String name, String country);
 
-	Page<HotelSummary> getHotels(City city, Pageable pageable);
-
-	Page<City> findAll();
 }

@@ -24,12 +24,16 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.springframework.util.Assert;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 public class Review implements Serializable {
@@ -37,7 +41,9 @@ public class Review implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+//	@GeneratedValue(strategy = IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "REVIEW_SEQ")
+	@SequenceGenerator(name = "REVIEW_SEQ", sequenceName = "REVIEW_SEQ", allocationSize = 10000)
 	private Long id;
 
 	@ManyToOne(optional = false)

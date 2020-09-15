@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package sample.data.jpa.service;
+package sample.data.jpa.repository;
 
 import java.util.List;
 
@@ -22,13 +22,22 @@ import sample.data.jpa.domain.City;
 import sample.data.jpa.domain.Hotel;
 import sample.data.jpa.domain.HotelSummary;
 import sample.data.jpa.domain.RatingCount;
+import sample.data.jpa.domain.projection.HotelProjection;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 
-interface HotelRepository extends Repository<Hotel, Long> {
+import static sample.data.jpa.ApplicationConstants.HOTEL_NAME_GRAPH;
+
+public interface HotelRepository extends JpaRepository<Hotel, Long> {
+
+//	@Query("select h.id, h.name, h.address, h.zip, h.city, h.reviews from Hotel h left outer join fetch h.reviews r group by h")
+	@EntityGraph(value = HOTEL_NAME_GRAPH)
+	Page<Hotel> findAllHotels(Pageable pageable);
 
 	Hotel findByCityAndName(City city, String name);
 

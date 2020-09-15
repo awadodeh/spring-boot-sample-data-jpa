@@ -1,0 +1,25 @@
+server.port: 8080
+
+spring.application.name: sample-service
+logging.level.org.hibernate.SQL: trace
+
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    initialization-mode: always
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    #      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+spring.h2.console.enabled: true
+spring.h2.console.path: /h2-console
+spring.jpa.show-sql: true
+
+spring.datasource.data: classpath:data.sql

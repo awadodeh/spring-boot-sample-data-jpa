@@ -18,24 +18,66 @@ package sample.data.jpa.domain;
 
 import java.io.Serializable;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.NaturalId;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import static sample.data.jpa.ApplicationConstants.HOTEL_NAME_GRAPH;
+import static sample.data.jpa.ApplicationConstants.REVIEW_NAME_GRAPH;
+
+
+@NamedEntityGraph(
+		name = HOTEL_NAME_GRAPH,
+		attributeNodes = {
+				@NamedAttributeNode("id"),
+				@NamedAttributeNode("name"),
+				@NamedAttributeNode("address"),
+				@NamedAttributeNode("zip"),
+				@NamedAttributeNode(value = "reviews", subgraph = REVIEW_NAME_GRAPH),
+		},
+		subgraphs = {
+				@NamedSubgraph(
+						name = REVIEW_NAME_GRAPH,
+						attributeNodes = {
+								@NamedAttributeNode("id"),
+								@NamedAttributeNode("checkInDate"),
+								@NamedAttributeNode("title"),
+						}
+				)
+		}
+)
 @Entity
+@Data
+@Builder
+@ToString
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 public class Hotel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "HOTEL_SEQ")
+	@SequenceGenerator(name = "HOTEL_SEQ", sequenceName = "HOTEL_SEQ", allocationSize = 10000)
 	private Long id;
 
 	@ManyToOne(optional = false)
@@ -54,28 +96,4 @@ public class Hotel implements Serializable {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "hotel")
 	private Set<Review> reviews;
-
-	protected Hotel() {
-	}
-
-	public Hotel(City city, String name) {
-		this.city = city;
-		this.name = name;
-	}
-
-	public City getCity() {
-		return this.city;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public String getAddress() {
-		return this.address;
-	}
-
-	public String getZip() {
-		return this.zip;
-	}
 }

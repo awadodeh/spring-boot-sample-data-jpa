@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package sample.data.jpa.web;
+package sample.data.jpa.controller;
 
 import sample.data.jpa.service.CityService;
 

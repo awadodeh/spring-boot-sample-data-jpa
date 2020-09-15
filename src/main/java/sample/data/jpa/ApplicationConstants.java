@@ -14,21 +14,10 @@
  * limitations under the License.
  */
 
-package sample.data.jpa.service;
+package sample.data.jpa;
 
-import sample.data.jpa.domain.City;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.Repository;
-
-interface CityRepository extends Repository<City, Long> {
-
-	Page<City> findAll(Pageable pageable);
-
-	Page<City> findByNameContainingAndCountryContainingAllIgnoringCase(String name,
-			String country, Pageable pageable);
-
-	City findByNameAndCountryAllIgnoringCase(String name, String country);
+public interface ApplicationConstants {
+	String HOTEL_NAME_GRAPH = "hotel-entity-graph-with-city-and-reviews";
+	String REVIEW_NAME_GRAPH = "review-entity-graph";
 
 }

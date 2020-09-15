@@ -18,8 +18,11 @@ package sample.data.jpa.service;
 
 import sample.data.jpa.domain.City;
 import sample.data.jpa.domain.HotelSummary;
+import sample.data.jpa.repository.CityRepository;
+import sample.data.jpa.repository.HotelRepository;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,5 +77,10 @@ class CityServiceImpl implements CityService {
 	public Page<HotelSummary> getHotels(City city, Pageable pageable) {
 		Assert.notNull(city, "City must not be null");
 		return this.hotelRepository.findByCity(city, pageable);
+	}
+
+	@Override
+	public Page<City> findAll() {
+		return cityRepository.findAll(PageRequest.of(0, 100));
 	}
 }
